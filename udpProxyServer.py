@@ -67,8 +67,12 @@ class UDPServer(object):
           return 
 
        print "Adding tunnel %s" % str(t)
- 
-       tun = pytun.TunTapDevice(name=tunnelname)
+
+       tun = self.getTunnel(remoteServerIP)
+
+       if tun is None:
+          tun = pytun.TunTapDevice(name=tunnelname)
+
        tun.addr = localAddr
        tun.netmask = netmask
        tun.mtu = mtu
@@ -108,15 +112,16 @@ class UDPServer(object):
        m = json.loads(msg)
        op = m.get('op', None)
 
-       tunnels = m.get('tunnel', [])
-
-       for tunnel in tunnels: 
-           if op == 'add': 
+       if op == 'add': 
+          tunnels = m.get('tunnel', [])
+          for tunnel in tunnels: 
               self.addTunnel(tunnel)
-           elif op == 'del': 
+       elif op == 'del': 
+          tunnels = m.get('tunnel', [])
+          for tunnel in tunnels: 
               self.delTunnel(tunnel)
-           else: 
-              print "Invalid operation: %s" % op
+       else: 
+          print "Invalid operation: %s" % op
        
    def run(self):
 
@@ -162,10 +167,8 @@ class UDPServer(object):
                     #   (tunnel, data) 
                     #
                     self.to_tun[tun.name] = (tun, to_tun)
-                 ''' 
                  else: 
                     print "No tunnel found for server IP %s" % str(addr[0])
-                 '''
 
              if self.control in r: 
                 controlMessage, caddr = self.control.recvfrom(65535)
@@ -185,6 +188,7 @@ class UDPServer(object):
              #
              for (raddr, to_sock) in self.to_sock.iteritems():
                  self.sock.sendto(to_sock, (raddr, self.dport))
+                 print "Sending message to server: %s" % str(raddr)
 
              self.to_sock = {}
 
