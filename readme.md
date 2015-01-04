@@ -17,7 +17,7 @@ The data traffic from remote host is sent/received on data port.
 
 
 Example:
-sudo python udpProxyServer.py [-dp <dataPort>] [-cp <controlPort]> &
+sudo python udpProxyServer.py [-dp \<dataPort\>] [-cp \<controlPort\>] &
 
 Default: 
 
