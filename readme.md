@@ -1,7 +1,7 @@
 UDP Tunnel Proxy Server
 =======================
 
-## Prerequisite ## 
+## Prerequisite 
 UDP proxy server requires python-pytun module to be installed on the
 hosts
 
@@ -12,7 +12,7 @@ On Ubuntu 14.04 execute following
 	sudo apt-get install python-dev
 	sudo pip install python-pytun
 
-## Description ## 
+## Description 
 
 The UDP proxy Server provides a simple method to form a 
 mesh between set of hosts using UDP tunnels and tun device. 
@@ -83,9 +83,9 @@ udpProxyServerControl.py 172.100.1.1 -o add -n udp0 -t 10.0.0.1 -r 172.100.1.2 -
 
 Example Mesh between three hosts 
 
-minion-1: 172.100.1.1   
-minion-2: 172.100.1.2
-minion-3: 172.100.2.3
+host1 - 172.100.1.1   
+host2 - 172.100.1.2
+host3 - 172.100.2.3
 
 #### [1]: Launch UDP Proxy Server Daemon on each host ####
 
@@ -123,15 +123,15 @@ udpProxyServerControl.py -s 172.100.1.3 -o add -n udp3 -t 10.0.2.3 -r 172.100.1.
 
 Adding routes via tunnel interface
 
-Host-1:
+###### Host-1: ######
 sudo route add -net 192.168.2.0 netmask 255.255.255.0 dev udp2
 sudo route add -net 192.168.3.0 netmask 255.255.255.0 dev udp3
 
-Host-2:
+###### Host-2: ######
 sudo route add -net 192.168.1.0 netmask 255.255.255.0 dev udp1
 sudo route add -net 192.168.3.0 netmask 255.255.255.0 dev udp3
 
-Host-3:
+###### Host-3: ######
 sudo route add -net 192.168.1.0 netmask 255.255.255.0 dev udp1
 sudo route add -net 192.168.2.0 netmask 255.255.255.0 dev udp2
 
