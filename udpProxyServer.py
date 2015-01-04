@@ -205,10 +205,10 @@ def getOptions():
     parser = argparse.ArgumentParser(description='UDP proxy Server ')
     parser.add_argument('-dp','--dataPort', 
                         help='UDP Proxy Server data port', 
-                        type=int, default=1194)
+                        type=int, default=5000)
     parser.add_argument('-cp','--controlPort', 
                         help='UDP Proxy Server control port', 
-                        type=int, default=1195)
+                        type=int, default=5001)
     args = vars(parser.parse_args())
  
     dp = args.get('dataPort', None)
