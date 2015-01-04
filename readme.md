@@ -21,8 +21,8 @@ sudo python udpProxyServer.py [-dp <dataPort>] [-cp <controlPort]> &
 
 Default: 
 
-data port: 1194
-control port: 1195 
+data port: 5000
+control port: 5001 
 
 2. udpProxyServerControl.py 
 
@@ -47,7 +47,7 @@ The udpProxyServer expects control message in following format:
 
 Example: 
 
-udpProxyServerControl.py 172.100.1.1 -o add -n udp0 -t 10.0.0.1 -r 172.100.1.2 -p 1195
+udpProxyServerControl.py 172.100.1.1 -o add -n udp0 -t 10.0.0.1 -r 172.100.1.2 -p 5001
 
 Example Mesh between three hosts 
 
@@ -57,10 +57,10 @@ minion-3: 172.100.2.3
 
 [1]: Launch UDP Proxy Server Daemon on each host
 
-sudo python udpProxyServer.py -dp 5000 -cp 1195 &
+sudo python udpProxyServer.py -dp 5000 -cp 5001 &
 
 The daemon is now waiting for commands to add point-to-point 
-tunnels to other hosts. The control messages are expected on udp port 1195 
+tunnels to other hosts. The control messages are expected on udp port 5001 
 while data packets are expected on port 5000. 
 
 You can change the port numbers by changing the above cmdline params 
@@ -69,24 +69,24 @@ You can change the port numbers by changing the above cmdline params
 
 Host 1: 
   Tunnel to Host 2:
-      udpProxyServerControl.py -s 172.100.1.1 -o add -n udp2 -t 10.0.0.2 -r 172.100.1.2 -p 1195
+      udpProxyServerControl.py -s 172.100.1.1 -o add -n udp2 -t 10.0.0.2 -r 172.100.1.2 -p 5001
 
   Tunnel to Host 3:
-      udpProxyServerControl.py -s 172.100.1.1 -o add -n udp3 -t 10.0.0.2 -r 172.100.1.2 -p 1195
+      udpProxyServerControl.py -s 172.100.1.1 -o add -n udp3 -t 10.0.0.2 -r 172.100.1.2 -p 5001
 
 Host 2: 
   Tunnel to Host 1:
-      udpProxyServerControl.py -s 172.100.1.2 -o add -n udp1 -t 10.0.1.1 -r 172.100.1.1 -p 1195
+      udpProxyServerControl.py -s 172.100.1.2 -o add -n udp1 -t 10.0.1.1 -r 172.100.1.1 -p 5001
 
   Tunnel to Host 3:
-      udpProxyServerControl.py -s 172.100.1.2 -o add -n udp3 -t 10.0.1.3 -r 172.100.1.3 -p 1195
+      udpProxyServerControl.py -s 172.100.1.2 -o add -n udp3 -t 10.0.1.3 -r 172.100.1.3 -p 5001
 
 Host 3: 
   Tunnel to Host 1:
-      udpProxyServerControl.py -s 172.100.1.3 -o add -n udp1 -t 10.0.2.1 -r 172.100.1.1 -p 1195
+      udpProxyServerControl.py -s 172.100.1.3 -o add -n udp1 -t 10.0.2.1 -r 172.100.1.1 -p 5001
 
   Tunnel to Host 2:
-      udpProxyServerControl.py -s 172.100.1.3 -o add -n udp3 -t 10.0.2.2 -r 172.100.1.2 -p 1195
+      udpProxyServerControl.py -s 172.100.1.3 -o add -n udp3 -t 10.0.2.2 -r 172.100.1.2 -p 5001
 
 
 Example of adding routes via tunnel 
